@@ -1,8 +1,103 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
-        default-menu-index="1" require-authentication="anonymous-all">
+        require-authentication="anonymous-all" default-menu-index="2">
+
+        <transition name="findParty">
+            <default-response url="." />
+        </transition>
+
+        <transition name="createParty">
+            <service-call name="PartyService.create#Party" />
+            <default-response url="." />
+        </transition>
+
+        <transition name="deleteParty">
+            <service-call name="PartyService.delete#Party" />
+            <default-response url="." />
+        </transition>
+
+        <transition name="getPartyTypeEnumList">
+            <actions>
+                <entity-find entity-name="moqui.basic.Enumeration" list="partyTypeEnumList">
+                    <econdition field-name="enumTypeId" value="PartyType" />
+                    <order-by field-name="description"/>
+                </entity-find>
+                <script>ec.web.sendJsonResponse(partyTypeEnumList)</script>
+            </actions>
+            <default-response type="none" />
+        </transition>
+
+        <actions>
+            <entity-find entity-name="relationshipmgr.Party" list="party">
+                <search-form-inputs default-order-by="partyId" />
+            </entity-find>
+        </actions>
+
     <widgets>
-        <label text="qwerty" type="h2"/>
+        <label text="qwerty" type="h1"/>
     </widgets>
+        <widgets>
+            <container-box>
+                <box-header><label type="h3" text="Party Model" /></box-header>
+                <box-toolbar>
+                    <container-dialog id="CreatePartyDialog" button-text="Create Party">
+                        <form-single name="CreateParty" transition="createParty">
+                            <field name="partyId">
+                                <default-field title="Party" tooltip="Please Enter PartyId" >
+                                    <text-line />
+                                </default-field>
+                            </field>
+                            <field name="partyTypeEnumId">
+                                <default-field title="Type" tooltip="Type of party">
+                                    <drop-down>
+                                        <dynamic-options transition="getPartyTypeEnumList" value-field="enumId" label-field="description" />
+                                    </drop-down>
+                                </default-field>
+                            </field>
+                            <field name="submitButton">
+                                <default-field title="Create">
+                                    <submit />
+                                </default-field>
+                            </field>
+                        </form-single>
+                    </container-dialog>
+                </box-toolbar>
+
+                <box-body>
+                    <form-list name="ListParty" list="party" skip-form="true" header-dialog="true" select-columns="true"
+                               show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                        <field name="partyId" print-width="15" print-width-type="characters" >
+                            <header-field title="Party Id" show-order-by="case-insensitive">
+                                <text-find hide-options="true"/>
+                            </header-field>
+                            <default-field>
+                                <display />
+                                <link url="editParty" text="${partyId}" link-type="anchor" btn-type="danger"/>
+                            </default-field>
+                        </field>
+                        <field name="partyTypeEnumId" print-width="30" print-width-type="characters">
+                            <header-field title="Type" show-order-by="case-insensitive">
+                                <auto-widget-entity entity-name="relationshipmgr.Party" field-name="partyTypeEnumId" />
+                            </header-field>
+                            <default-field title="Type">
+                                <display-entity entity-name="moqui.basic.Enumeration" />
+                            </default-field>
+                        </field>
+                        <field name="delete" print-width="5" print-width-type="characters">
+                            <default-field>
+                                <link url="deleteParty"  btn-type="danger" icon="fa fa-trash" />
+                            </default-field>
+                        </field>
+                        <field name="findButton">
+                            <header-field>
+                                <submit text="Find" />
+                            </header-field>
+                        </field>
+                    </form-list>
+                </box-body>
+            </container-box>
+        </widgets>
 </screen>
+
+
