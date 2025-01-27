@@ -1,0 +1,58 @@
+[
+  {"_dataType":  "demo"},
+  {
+    "_entity": "Party",
+    "partyId": "PER123",
+    "partyTypeEnumId": "PERSON"
+  },
+  {
+    "_entity": "Party",
+    "partyId": "ORG123",
+    "partyTypeEnumId": "ORGANIZATION"
+  },
+  {
+    "_entity": "Person",
+    "partyId": "PER123",
+    "firstName": "John",
+    "lastName": "Doe",
+    "birthDate": "1990-01-01"
+  },
+  {
+    "_entity": "Organization",
+    "partyId": "ORG123",
+    "organizationName": "ABC"
+  },
+  {
+    "_entity": "PartyRole",
+    "partyId": "PER123",
+    "roleTypeId": "EMPLOYEE"
+  },
+  {
+    "_entity": "ContactMech",
+    "contactMechId": "1000",
+    "contactMechTypeEnumId": "TELECOM_NUMBER"
+  },
+  {
+    "_entity": "TelecomNumber",
+    "contactMechId": "1000",
+    "contactCode": "1",
+    "areaCode": "123",
+    "contactNumber": "4567890"
+  },
+  {
+    "_entity": "PostalAddress",
+    "contactMechId": "1000",
+    "toName": "John Doe",
+    "attnName": "Office",
+    "address1": "123 Main St",
+    "address2": "Suite 100",
+    "city": "Metropolis",
+    "postalCode": "12345"
+  },
+  {
+    "_entity": "EmailAddress",
+    "contactMechId": "1000",
+    "infoString": "example@email.com"
+  }
+]
+

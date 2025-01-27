@@ -1,0 +1,50 @@
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-3.xsd">
+    <!-- ========================= Party Entity ============================= -->
+    <entity entity-name="Party" package="relationshipmgr">
+        <field name="partyId" type="id" is-pk="true" />
+        <field name="partyTypeEnumId" type="id" />
+
+<!--        <relationship type="one" related="relationshipmgr.Person" short-alias="partyPerson"/>-->
+<!--        <relationship type="one" related="relationshipmgr.Organization" short-alias="partyOrganization"/>-->
+        <relationship type="many" related="relationshipmgr.PartyRole" short-alias="partyRole"/>
+        <relationship type="one" title="PartyType" related="moqui.basic.Enumeration" short-alias="type">
+            <key-map field-name="partyTypeEnumId" related="enumId"/>
+        </relationship>
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="Party Type" enumTypeId="PartyType" />
+            <moqui.basic.Enumeration description="Person" enumId="PERSON" enumTypeId="PartyType" />
+            <moqui.basic.Enumeration description="Organization" enumId="ORGANIZATION" enumTypeId="PartyType"/>
+        </seed-data>
+
+        <master>
+            <detail relationship="partyPerson"/>
+            <detail relationship="partyOrganization"/>
+            <detail relationship="partyRole"/>
+            <detail relationship="type"/>
+        </master>
+    </entity>
+
+    <!-- ========================= Person Entity ============================= -->
+    <entity entity-name="Person" package="relationshipmgr">
+        <field name="partyId" type="id" is-pk="true" />
+        <field name="firstName" type="text-medium" />
+        <field name="lastName" type="text-medium" />
+        <field name="birthDate" type="date" />
+        <relationship type="one" related="relationshipmgr.Party" />
+    </entity>
+
+    <!-- ========================= Organization Entity ============================= -->
+    <entity entity-name="Organization" package="relationshipmgr">
+        <field name="partyId" type="id" is-pk="true" />
+        <field name="organizationName" type="text-medium" />
+        <relationship type="one" related="relationshipmgr.Party"/>
+    </entity>
+
+    <!-- ========================= Party Role Entity ============================= -->
+    <entity entity-name="PartyRole" package="relationshipmgr">
+        <field name="partyId" type="id" is-pk="true" />
+        <field name="roleTypeId" type="id" />
+        <relationship type="many" related="relationshipmgr.Party" />
+    </entity>
+</entities>

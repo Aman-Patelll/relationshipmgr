@@ -1,0 +1,49 @@
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-3.xsd">
+    <!-- ========================= ContactMech Entity ============================= -->
+    <entity entity-name="ContactMech" package="relationshipmgr">
+        <field name="contactMechId" type="id" is-pk="true" />
+        <field name="contactMechTypeEnumId" type="id" />
+
+        <relationship type="one" related="relationshipmgr.TelecomNumber" />
+        <relationship type="one" related="relationshipmgr.PostalAddress" />
+        <relationship type="one" related="relationshipmgr.EmailAddress" />
+        <relationship type="one" title="ContactMechType" related="moqui.basic.Enumeration" short-alias="contactMechType">
+            <key-map field-name="contactMechTypeEnumId" related="enumId"/>
+        </relationship>
+
+        <seed-data>
+            <moqui.basic.EnumerationType description="Contact Mech Type" enumTypeId="ContactMechType" />
+            <moqui.basic.Enumeration description="Telecom Number" enumId="TELECOM_NUMBER" enumTypeId="ContactMechType" />
+            <moqui.basic.Enumeration description="Postal Address" enumId="POSTAL_ADDRESS" enumTypeId="ContactMechType"/>
+            <moqui.basic.Enumeration description="Email Address" enumId="EMAIL_ADDRESS" enumTypeId="ContactMechType"/>
+        </seed-data>
+    </entity>
+    
+    <entity entity-name="TelecomNumber" package="relationshipmgr">
+        <field name="contactMechId" type="id" is-pk="true" />
+        <field name="contactCode" type="number-integer" />
+        <field name="areaCode" type="number-integer" />
+        <field name="contactNumber" type="number-integer" />
+
+        <relationship type="many" related="relationshipmgr.ContactMech" />
+    </entity>
+    
+    <entity entity-name="PostalAddress" package="relationshipmgr">
+        <field name="contactMechId" type="id" is-pk="true" />
+        <field name="toName" type="text-medium" />
+        <field name="attnName" type="text-medium" />
+        <field name="address1" type="text-medium" />
+        <field name="address2" type="text-medium" />
+        <field name="city" type="text-short" />
+        <field name="postalCode" type="number-integer" />
+
+        <relationship type="many" related="relationshipmgr.ContactMech" />
+    </entity>
+    
+    <entity entity-name="EmailAddress" package="relationshipmgr" >
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="infoString" type="text-short" />
+
+        <relationship type="many" related="relationshipmgr.ContactMech" />
+    </entity>
+</entities>
