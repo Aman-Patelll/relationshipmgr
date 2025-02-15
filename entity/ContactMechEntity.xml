@@ -4,9 +4,9 @@
         <field name="contactMechId" type="id" is-pk="true" />
         <field name="contactMechTypeEnumId" type="id" />
 
-        <relationship type="one" related="relationshipmgr.TelecomNumber" />
-        <relationship type="one" related="relationshipmgr.PostalAddress" />
-        <relationship type="one" related="relationshipmgr.EmailAddress" />
+        <relationship type="one-nofk" related="relationshipmgr.TelecomNumber" />
+        <relationship type="one-nofk" related="relationshipmgr.PostalAddress" />
+        <relationship type="one-nofk" related="relationshipmgr.EmailAddress" />
         <relationship type="one" title="ContactMechType" related="moqui.basic.Enumeration" short-alias="contactMechType">
             <key-map field-name="contactMechTypeEnumId" related="enumId"/>
         </relationship>

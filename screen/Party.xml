@@ -1,103 +1,892 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
-        require-authentication="anonymous-all" default-menu-index="2">
+    xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.1.xsd"
+    require-authentication="anonymous-all" default-menu-index="2">
 
-        <transition name="findParty">
-            <default-response url="." />
-        </transition>
+    <transition name="findParty">
+        <default-response url="." />
+    </transition>
 
-        <transition name="createParty">
-            <service-call name="PartyService.create#Party" />
-            <default-response url="." />
-        </transition>
+    <transition name="createParty">
+        <service-call name="PartyService.create#Party" />
+        <default-response url="." />
+    </transition>
 
-        <transition name="deleteParty">
-            <service-call name="PartyService.delete#Party" />
-            <default-response url="." />
-        </transition>
+    <transition name="updateParty">
+        <service-call name="PartyService.store#Party" />
+        <default-response url="." />
+    </transition>
 
-        <transition name="getPartyTypeEnumList">
-            <actions>
-                <entity-find entity-name="moqui.basic.Enumeration" list="partyTypeEnumList">
-                    <econdition field-name="enumTypeId" value="PartyType" />
-                    <order-by field-name="description"/>
-                </entity-find>
-                <script>ec.web.sendJsonResponse(partyTypeEnumList)</script>
-            </actions>
-            <default-response type="none" />
-        </transition>
+    <transition name="deleteParty">
+        <service-call name="PartyService.delete#Party" />
+        <default-response url="." />
+    </transition>
 
+    <transition name="createPerson">
+        <service-call name="PartyService.create#Person" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updatePerson">
+        <service-call name="PartyService.store#Person" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deletePerson">
+        <service-call name="PartyService.delete#Person" />
+        <default-response url="." />
+    </transition>
+    
+    <transition name="createOrganization">
+        <service-call name="PartyService.create#Organization" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updateOrganization">
+        <service-call name="PartyService.store#Organization" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deleteOrganization">
+        <service-call name="PartyService.delete#Organization" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="createPartyRole">
+        <service-call name="PartyService.create#PartyRole" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updatePartyRole">
+        <service-call name="PartyService.store#PartyRole" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deletePartyRole">
+        <service-call name="PartyService.delete#PartyRole" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="createContactMech">
+        <service-call name="create#relationshipmgr.ContactMech" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updateContactMech">
+        <service-call name="update#relationshipmgr.ContactMech" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deleteContactMech">
+        <service-call name="delete#relationshipmgr.ContactMech" in-map="context" out-map="context" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="createTelecomNumber">
+        <service-call name="create#relationshipmgr.TelecomNumber" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updateTelecomNumber">
+        <service-call name="update#relationshipmgr.TelecomNumber" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deleteTelecomNumber">
+        <service-call name="delete#relationshipmgr.TelecomNumber" in-map="context" out-map="context" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="createPostalAddress">
+        <service-call name="create#relationshipmgr.PostalAddress" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="updatePostalAddress">
+        <service-call name="update#relationshipmgr.PostalAddress" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="deletePostalAddress">
+        <service-call name="delete#relationshipmgr.PostalAddress" in-map="context" out-map="context" />
+        <default-response url="." />
+    </transition>
+
+    <transition name="getPartyTypeEnumList">
         <actions>
-            <entity-find entity-name="relationshipmgr.Party" list="party">
-                <search-form-inputs default-order-by="partyId" />
+            <entity-find entity-name="moqui.basic.Enumeration" list="partyTypeEnumList">
+                <econdition field-name="enumTypeId" value="PartyType" />
+                <order-by field-name="description"/>
             </entity-find>
+            <script>ec.web.sendJsonResponse(partyTypeEnumList)</script>
         </actions>
+        <default-response type="none" />
+    </transition>
+    
+    <transition name="getContactMechTypeEnumList">
+        <actions>
+            <entity-find entity-name="moqui.basic.Enumeration" list="contactMechTypeEnumId">
+                <econdition field-name="enumTypeId" value="ContactMechType" />
+                <order-by field-name="description"/>
+            </entity-find>
+            <script>ec.web.sendJsonResponse(contactMechTypeEnumId)</script>
+        </actions>
+        <default-response type="none" />
+    </transition>
+
+    <actions>
+        <entity-find entity-name="relationshipmgr.Party" list="party">
+            <search-form-inputs default-order-by="partyId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.Person" list="person">
+            <search-form-inputs default-order-by="partyId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.Organization" list="organization">
+            <search-form-inputs default-order-by="partyId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.PartyRole" list="partyRole">
+            <search-form-inputs default-order-by="partyId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.ContactMech" list="contactMech">
+            <search-form-inputs default-order-by="contactMechId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.TelecomNumber" list="telecomNumber">
+            <search-form-inputs default-order-by="contactMechId" />
+        </entity-find>
+        <entity-find entity-name="relationshipmgr.PostalAddress" list="postalAddress">
+            <search-form-inputs default-order-by="contactMechId" />
+        </entity-find>
+    </actions>
 
     <widgets>
-        <label text="qwerty" type="h1"/>
+        <container-box>
+            <box-header><label type="h3" text="Party Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreatePartyDialog" button-text="Create Party">
+                    <form-single name="CreateParty" transition="createParty">
+                        <field name="partyId">
+                            <default-field title="Party" tooltip="Please Enter PartyId" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="partyTypeEnumId">
+                            <default-field title="Type" tooltip="Type of party">
+                                <drop-down>
+                                    <dynamic-options transition="getPartyTypeEnumList" value-field="enumId" label-field="description" />
+                                </drop-down>
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body>
+                <form-list name="ListParty" list="party" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="partyId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="partyTypeEnumId" print-width="30" print-width-type="characters">
+                        <header-field title="Type" show-order-by="case-insensitive">
+                            <auto-widget-entity entity-name="relationshipmgr.Party" field-name="partyTypeEnumId" />
+                        </header-field>
+                        <default-field title="Type">
+                            <display-entity entity-name="moqui.basic.Enumeration" />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deleteParty"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field>
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdateParty" button-text="Update Party" icon="fa fa-pencil">
+                                <form-single name="UpdateParty" transition="updateParty" >
+                                    <field name="partyId">
+                                        <default-field title="Party Id" tooltip="Please Enter Party ID">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="partyTypeEnumId">
+                                        <default-field title="Type" tooltip="Type of party">
+                                            <drop-down>
+                                                <dynamic-options transition="getPartyTypeEnumList" value-field="enumId" label-field="description" />
+                                            </drop-down>
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="Person Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreatePersonDialog" button-text="Create Person">
+                    <form-single name="CreatePerson" transition="createPerson">
+                        <field name="partyId">
+                            <default-field title="Party" tooltip="Please Enter PartyId" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="firstName">
+                            <default-field title="First Name" tooltip="Enter First Name">
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="lastName">
+                            <default-field title="Last Name" tooltip="Enter Last Name">
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="birthDate">
+                            <default-field title="Birth Date" tooltip="Enter Birth Date">
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListPerson" list="person" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="partyId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="firstName" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="lastName" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="birthDate" print-width="15" print-width-type="characters" >
+                        <header-field title="Birth Date" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deletePerson"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field>
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdatePerson" button-text="Update Person" icon="fa fa-pencil">
+                                <form-single name="UpdatePerson" transition="updatePerson" >
+                                    <field name="partyId">
+                                        <default-field title="Party Id" tooltip="Please Enter Party ID">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="firstName">
+                                        <default-field title="First Name" tooltip="Please Enter First Name">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="lastName">
+                                        <default-field title="Last Name" tooltip="Please Enter Last Name">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="birthDate">
+                                        <default-field title="Birth Date" tooltip="Please Enter Birth Date">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="Organization Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreateOrganizationDialog" button-text="Create Organization">
+                    <form-single name="CreateOrganization" transition="createOrganization">
+                        <field name="partyId">
+                            <default-field title="Party" tooltip="Please Enter PartyId" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="organizationName">
+                            <default-field title="Organization Name" tooltip="Enter Organization Name">
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListOrganization" list="organization" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="partyId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="organizationName" print-width="15" print-width-type="characters" >
+                        <header-field title="Organization Name" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deleteOrganization"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field> 
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdateOrganization" button-text="Update Organization" icon="fa fa-pencil">
+                                <form-single name="UpdateOrganization" transition="updateOrganization" >
+                                    <field name="partyId">
+                                        <default-field title="Party Id" tooltip="Please Enter Party ID">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="organizationName">
+                                        <default-field title="Organization Name" tooltip="Please Enter Organization Name">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="PartyRole Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreatePartyRoleDialog" button-text="Create PartyRole">
+                    <form-single name="CreatePartyRole" transition="createPartyRole">
+                        <field name="partyId">
+                            <default-field title="Party" tooltip="Please Enter PartyId" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="roleTypeId">
+                            <default-field title="Role Type" tooltip="Enter Role Type">
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListPartyRole" list="partyRole" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="partyId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="roleTypeId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Role" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deletePartyRole"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field> 
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdatePartyRole" button-text="Update PartyRole" icon="fa fa-pencil">
+                                <form-single name="UpdatePartyRole" transition="updatePartyRole" >
+                                    <field name="partyId">
+                                        <default-field title="Party Id" tooltip="Please Enter Party ID">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="roleTypeId">
+                                        <default-field title="Party Role" tooltip="Please Enter Party Role">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="ContactMech Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreateContactMechDialog" button-text="Create ContactMech">
+                    <form-single name="CreateContactMech" transition="createContactMech">
+                        <field name="contactMechId">
+                            <default-field title="ContactMech" tooltip="Please Enter ContactMech Id" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="contactMechTypeEnumId">
+                            <default-field title="Contact Mech Type Enum Id" tooltip="Please Enter Contact Mech Type Enum Id ">
+                                <drop-down>
+                                    <dynamic-options transition="getContactMechTypeEnumList" value-field="enumId" label-field="description" />
+                                </drop-down>
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListContactMech" list="contactMech" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="contactMechId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="contactMechTypeEnumId" print-width="15" print-width-type="characters" >
+                        <header-field title="Party Role" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deleteContactMech"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field>  
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdateContactMech" button-text="Update ContactMech" icon="fa fa-pencil">
+                                <form-single name="UpdateContactMech" transition="updateContactMech" >
+                                    <field name="contactMechId">
+                                        <default-field title="contactMech Id" tooltip="Please Enter ContactMech ID">
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="contactMechTypeEnumId">
+                                        <default-field title="Contact Mech Type Enum Id" tooltip="Please Enter Contact Mech Type Enum Id ">
+                                            <drop-down>
+                                                <dynamic-options transition="getContactMechTypeEnumList" value-field="enumId" label-field="description" />
+                                            </drop-down>
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field> 
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="TelecomNumber Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreateTelecomNumberDialog" button-text="Create TelecomNumber">
+                    <form-single name="CreateTelecomNumber" transition="createTelecomNumber">
+                        <field name="contactMechId">
+                            <default-field title="contactMechId" tooltip="Please Enter contactMech Id" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="contactCode">
+                            <default-field title="Country Code" tooltip="Please Enter Country Code" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="areaCode">
+                            <default-field title="Area Code" tooltip="Please Enter Area Code" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="contactNumber">
+                            <default-field title="Contact Number" tooltip="Please Enter Contact Number" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListTelecomNumber" list="telecomNumber" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="contactMechId" print-width="15" print-width-type="characters" >
+                        <header-field title="contact Mech Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="contactCode" print-width="15" print-width-type="characters" >
+                        <header-field title="Country Code" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="areaCode" print-width="15" print-width-type="characters" >
+                        <header-field title="Area Code" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="contactNumber" print-width="15" print-width-type="characters" >
+                        <header-field title="Contact Number" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deleteTelecomNumber"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field>  
+                    <field name="edit" print-width="5" print-width-type="characters">
+                                    <default-field>
+                                        <container-dialog id="UpdateTelecomNumber" button-text="Update TelecomNumber" icon="fa fa-pencil">
+                                            <form-single name="UpdateTelecomNumber" transition="updateTelecomNumber" >
+                                                <field name="contactMechId">
+                                        <default-field title="contactMechId" tooltip="Please Enter contactMech Id" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="contactCode">
+                                        <default-field title="Country Code" tooltip="Please Enter Country Code" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="areaCode">
+                                        <default-field title="Area Code" tooltip="Please Enter Area Code" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="contactNumber">
+                                        <default-field title="Contact Number" tooltip="Please Enter Contact Number" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field> 
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
+
+        <container-box>
+            <box-header><label type="h3" text="PostalAddress Model" /></box-header>
+            <box-toolbar>
+                <container-dialog id="CreatePostalAddressDialog" button-text="Create PostalAddress">
+                    <form-single name="CreatePostalAddress" transition="createPostalAddress">
+                        <field name="contactMechId">
+                            <default-field title="contactMechId" tooltip="Please Enter contactMech Id" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="toName">
+                            <default-field title="toName" tooltip="Please Enter toName" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="attnName">
+                            <default-field title="attnName" tooltip="Please Enter attnName" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="address1">
+                            <default-field title="address1" tooltip="Please Enter address1" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="address2">
+                            <default-field title="address2" tooltip="Please Enter address2" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="city">
+                            <default-field title="city" tooltip="Please Enter city" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="postalCode">
+                            <default-field title="postalCode" tooltip="Please Enter postalCode" >
+                                <text-line />
+                            </default-field>
+                        </field>
+                        <field name="submitButton">
+                            <default-field title="Create">
+                                <submit />
+                            </default-field>
+                        </field>
+                    </form-single>
+                </container-dialog>
+            </box-toolbar>
+
+            <box-body> 
+                <form-list name="ListPostalAddress" list="postalAddress" skip-form="true" header-dialog="true" select-columns="true"
+                            show-csv-button="true" show-text-button="true" show-pdf-button="true">
+                    <field name="contactMechId" print-width="15" print-width-type="characters" >
+                        <header-field title="contact Mech Id" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="toName" print-width="15" print-width-type="characters" >
+                        <header-field title="TO Name" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="attnName" print-width="15" print-width-type="characters" >
+                        <header-field title="Attn Name" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="address1" print-width="15" print-width-type="characters" >
+                        <header-field title="Address1" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="address2" print-width="15" print-width-type="characters" >
+                        <header-field title="Address2" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="city" print-width="15" print-width-type="characters" >
+                        <header-field title="city" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="postalCode" print-width="15" print-width-type="characters" >
+                        <header-field title="PostalCode" show-order-by="case-insensitive">
+                            <text-find hide-options="true"/>
+                        </header-field>
+                        <default-field>
+                            <display />
+                        </default-field>
+                    </field>
+                    <field name="delete" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <link url="deletePostalAddress"  btn-type="danger" icon="fa fa-trash" />
+                        </default-field>
+                    </field>  
+                    <field name="edit" print-width="5" print-width-type="characters">
+                        <default-field>
+                            <container-dialog id="UpdatePostalAddress" button-text="Update PostalAddress" icon="fa fa-pencil">
+                                <form-single name="UpdatePostalAddress" transition="updatePostalAddress" >
+                                    <field name="contactMechId">
+                                        <default-field title="contactMechId" tooltip="Please Enter contactMech Id" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="toName">
+                                        <default-field title="toName" tooltip="Please Enter toName" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="attnName">
+                                        <default-field title="attnName" tooltip="Please Enter attnName" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="address1">
+                                        <default-field title="address1" tooltip="Please Enter address1" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="address2">
+                                        <default-field title="address2" tooltip="Please Enter address2" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="city">
+                                        <default-field title="city" tooltip="Please Enter city" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="postalCode">
+                                        <default-field title="postalCode" tooltip="Please Enter postalCode" >
+                                            <text-line />
+                                        </default-field>
+                                    </field>
+                                    <field name="submitButton">
+                                        <default-field title="Update">
+                                            <submit />
+                                        </default-field>
+                                    </field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field> 
+                    <field name="findButton">
+                        <header-field>
+                            <submit text="Find" />
+                        </header-field>
+                    </field>
+                </form-list>
+            </box-body>
+        </container-box>
     </widgets>
-        <widgets>
-            <container-box>
-                <box-header><label type="h3" text="Party Model" /></box-header>
-                <box-toolbar>
-                    <container-dialog id="CreatePartyDialog" button-text="Create Party">
-                        <form-single name="CreateParty" transition="createParty">
-                            <field name="partyId">
-                                <default-field title="Party" tooltip="Please Enter PartyId" >
-                                    <text-line />
-                                </default-field>
-                            </field>
-                            <field name="partyTypeEnumId">
-                                <default-field title="Type" tooltip="Type of party">
-                                    <drop-down>
-                                        <dynamic-options transition="getPartyTypeEnumList" value-field="enumId" label-field="description" />
-                                    </drop-down>
-                                </default-field>
-                            </field>
-                            <field name="submitButton">
-                                <default-field title="Create">
-                                    <submit />
-                                </default-field>
-                            </field>
-                        </form-single>
-                    </container-dialog>
-                </box-toolbar>
-
-                <box-body>
-                    <form-list name="ListParty" list="party" skip-form="true" header-dialog="true" select-columns="true"
-                               show-csv-button="true" show-text-button="true" show-pdf-button="true">
-                        <field name="partyId" print-width="15" print-width-type="characters" >
-                            <header-field title="Party Id" show-order-by="case-insensitive">
-                                <text-find hide-options="true"/>
-                            </header-field>
-                            <default-field>
-                                <display />
-                                <link url="editParty" text="${partyId}" link-type="anchor" btn-type="danger"/>
-                            </default-field>
-                        </field>
-                        <field name="partyTypeEnumId" print-width="30" print-width-type="characters">
-                            <header-field title="Type" show-order-by="case-insensitive">
-                                <auto-widget-entity entity-name="relationshipmgr.Party" field-name="partyTypeEnumId" />
-                            </header-field>
-                            <default-field title="Type">
-                                <display-entity entity-name="moqui.basic.Enumeration" />
-                            </default-field>
-                        </field>
-                        <field name="delete" print-width="5" print-width-type="characters">
-                            <default-field>
-                                <link url="deleteParty"  btn-type="danger" icon="fa fa-trash" />
-                            </default-field>
-                        </field>
-                        <field name="findButton">
-                            <header-field>
-                                <submit text="Find" />
-                            </header-field>
-                        </field>
-                    </form-list>
-                </box-body>
-            </container-box>
-        </widgets>
 </screen>
-
-
