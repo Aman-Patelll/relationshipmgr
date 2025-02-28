@@ -46,4 +46,12 @@
 
         <relationship type="many" related="relationshipmgr.ContactMech" />
     </entity>
+
+        <entity entity-name="PartyContactMech" package="relationshipmgr" >
+        <field name="contactMechId" type="id" is-pk="true"/>
+        <field name="partyId" type="id" is-pk="true" />
+
+        <relationship type="one" related="relationshipmgr.ContactMech" />
+        <relationship type="one" related="relationshipmgr.party" />
+    </entity>
 </entities>
